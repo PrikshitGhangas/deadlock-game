@@ -77,7 +77,7 @@ describe('report', () => {
 
   it('renders markdown with every step', () => {
     const md = toMarkdown(run);
-    expect(md).toMatch(/# Deadlock Game report/);
+    expect(md).toMatch(/# DBMS-Laboratory report/);
     expect((md.match(/### Step /g) || []).length).toBe(result.steps.length);
     expect(md).toMatch(/Cycle:\*\* T1 → T2 → T1/);
   });
@@ -86,7 +86,7 @@ describe('report', () => {
     const back = fromJSON(toJSON(run));
     expect(back.mode).toBe('detection');
     expect(back.input.schedule).toBe(s.input.schedule);
-    expect(() => fromJSON('{}')).toThrow(/Not a Deadlock Game/);
+    expect(() => fromJSON('{}')).toThrow(/Not a valid DBMS-Laboratory/);
     expect(() => fromJSON('nope')).toThrow(/valid JSON/);
   });
 });

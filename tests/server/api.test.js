@@ -37,9 +37,9 @@ describe('API', () => {
 
     const md = await request(app).get(`/api/history/${id}/export?format=md`);
     expect(md.headers['content-type']).toMatch(/markdown/);
-    expect(md.text).toMatch(/# Deadlock Game report/);
+    expect(md.text).toMatch(/# DBMS-Laboratory report/);
     const js = await request(app).get(`/api/history/${id}/export`);
-    expect(JSON.parse(js.text).app).toBe('deadlock-game');
+    expect(JSON.parse(js.text).app).toBe('dbms-laboratory');
 
     expect((await request(app).delete(`/api/history/${id}`)).body.ok).toBe(true);
     expect((await request(app).get(`/api/history/${id}`)).status).toBe(404);

@@ -7,7 +7,7 @@
  */
 
 export const PROJECT = {
-  title: 'DBMS Project',
+  title: 'DBMS-Laboratory',
   subtitle: 'Interactive DBMS Laboratory: Database Design, Query Processing & Transactions',
   course: 'Database Management Systems',
   year: '2026',

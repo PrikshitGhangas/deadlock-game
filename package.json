@@ -1,8 +1,8 @@
 {
-  "name": "deadlock-game",
+  "name": "dbms-laboratory",
   "version": "1.0.0",
   "private": true,
-  "description": "Interactive DBMS Deadlock Game: visualize, simulate and learn deadlock detection, prevention and avoidance",
+  "description": "DBMS-Laboratory: Interactive visual platform for Database Design, Query Processing, and Transaction Concurrency Control",
   "type": "module",
   "workspaces": [
     "client",

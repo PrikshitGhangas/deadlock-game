@@ -19,7 +19,7 @@ export default function TopBar({ tab, onTab, theme, onTheme }) {
           <Icon name="database" size={22} />
         </span>
         <div>
-          DBMS Project
+          DBMS-Laboratory
           <small>Database Design · Query Processing · Transactions</small>
         </div>
       </div>
