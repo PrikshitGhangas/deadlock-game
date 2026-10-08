@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import TopBar, { TABS } from './components/layout/TopBar.jsx';
 import SimulatorPage from './pages/SimulatorPage.jsx';
 import BankersPage from './pages/BankersPage.jsx';
-import GamePage from './pages/GamePage.jsx';
+import LabPage from './pages/LabPage.jsx';
 import HistoryPage from './pages/HistoryPage.jsx';
 import TheoryPage from './pages/TheoryPage.jsx';
 import DevelopedByPage from './pages/DevelopedByPage.jsx';
@@ -40,7 +40,7 @@ export default function App() {
       <div hidden={tab !== 'detection'}><SimulatorPage mode="detection" active={tab === 'detection'} theme={theme} toast={toast} loadRequest={consume('detection')} onLoaded={() => setLoadRequest(null)} /></div>
       <div hidden={tab !== 'prevention'}><SimulatorPage mode="prevention" active={tab === 'prevention'} theme={theme} toast={toast} loadRequest={consume('prevention')} onLoaded={() => setLoadRequest(null)} /></div>
       <div hidden={tab !== 'bankers'}><BankersPage active={tab === 'bankers'} toast={toast} loadRequest={consume('bankers')} onLoaded={() => setLoadRequest(null)} /></div>
-      <div hidden={tab !== 'game'}><GamePage active={tab === 'game'} theme={theme} toast={toast} /></div>
+      <div hidden={tab !== 'lab'}><LabPage toast={toast} /></div>
       {tab === 'history' && <HistoryPage onLoad={openRun} toast={toast} />}
       {tab === 'theory' && <TheoryPage onTab={go} />}
       {tab === 'innovation' && <InnovationPage onTab={go} />}

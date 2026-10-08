@@ -4,7 +4,7 @@ export const TABS = [
   { id: 'detection', label: 'Detection', icon: 'search' },
   { id: 'prevention', label: 'Prevention', icon: 'shield' },
   { id: 'bankers', label: "Banker's", icon: 'bank' },
-  { id: 'game', label: 'Game', icon: 'game' },
+  { id: 'lab', label: 'DBMS Lab', icon: 'lab' },
   { id: 'history', label: 'History', icon: 'history' },
   { id: 'theory', label: 'Theory', icon: 'book' },
   { id: 'innovation', label: 'Innovation', icon: 'lightbulb' },
@@ -16,11 +16,11 @@ export default function TopBar({ tab, onTab, theme, onTheme }) {
     <header className="topbar">
       <div className="brand">
         <span className="logo" aria-hidden="true" style={{ display: 'inline-flex', color: 'var(--accent)' }}>
-          <Icon name="lock" size={22} />
+          <Icon name="database" size={22} />
         </span>
         <div>
-          Deadlock Game
-          <small>DBMS · detection · prevention · avoidance</small>
+          DBMS Project
+          <small>Database Design · Query Processing · Transactions</small>
         </div>
       </div>
       <nav className="tabs" role="tablist" aria-label="Modes">

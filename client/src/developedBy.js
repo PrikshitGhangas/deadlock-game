@@ -7,8 +7,8 @@
  */
 
 export const PROJECT = {
-  title: 'Deadlock Game',
-  subtitle: 'Interactive visualization of deadlock detection, prevention and avoidance in DBMS',
+  title: 'DBMS Project',
+  subtitle: 'Interactive DBMS Laboratory: Database Design, Query Processing & Transactions',
   course: 'Database Management Systems',
   year: '2026',
 };
@@ -16,9 +16,9 @@ export const PROJECT = {
 /** What makes this project different — shown as cards on the Innovation tab. */
 export const INNOVATIONS = [
   {
-    icon: 'game',
-    title: 'You are the scheduler',
-    text: 'Instead of only watching a deadlock happen, the Game mode lets the student choose which transaction runs next. Every click updates the wait-for graph live, one wrong order closes the cycle, and an exhaustive state-space search powers the hint system that marks which moves still lead to a deadlock-free finish.',
+    icon: 'lab',
+    title: 'Interactive DBMS Laboratory',
+    text: 'A unified interactive laboratory connecting Database Design (ER/EER modeling and relational schema mapping, 1NF to BCNF normalization), Query Processing (relational algebra query trees, heuristic pushdown optimization, B+ tree indexing), and Transactions (deadlock detection, prevention, avoidance, conflict serializability, and multi-protocol benchmarking).',
   },
   {
     icon: 'bot',

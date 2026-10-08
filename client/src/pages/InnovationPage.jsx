@@ -2,7 +2,7 @@ import { PROJECT, INNOVATIONS } from '../developedBy.js';
 import { Icon } from '../components/common/Icons.jsx';
 
 const TRY = {
-  'You are the scheduler': 'game',
+  'Interactive DBMS Laboratory': 'lab',
   'Two tutors: offline + AI': 'detection',
   'Watch the algorithm think': 'detection',
   'One schedule, four strategies': 'prevention',
@@ -18,8 +18,7 @@ export default function InnovationPage({ onTab }) {
         </div>
         <h1 style={{ margin: '4px 0 8px', fontSize: 30 }}>What makes {PROJECT.title} different</h1>
         <p style={{ margin: '0 auto', maxWidth: 720, color: 'var(--fg-muted)', fontSize: 16 }}>
-          Most deadlock demos show a static wait-for graph. Deadlock Game turns the topic into something you can
-          play with, question, and replay — an interactive lab for detection, prevention and avoidance rather than a slide.
+          Most database demos show static diagrams. DBMS Project turns database design, relational algebra query optimization, and transaction concurrency into interactive, replayable visual laboratories.
         </p>
       </section>
 
@@ -44,7 +43,7 @@ export default function InnovationPage({ onTab }) {
         <h2 id="compare-heading" style={{ fontSize: 20, margin: '0 0 12px', borderBottom: '1px solid var(--border)', paddingBottom: 6 }}>Compared with a typical classroom demo</h2>
         <div className="table-wrap">
           <table className="data">
-            <thead><tr><th>Aspect</th><th>Typical demo</th><th>Deadlock Game</th></tr></thead>
+            <thead><tr><th>Aspect</th><th>Typical demo</th><th>DBMS Project</th></tr></thead>
             <tbody>
               <tr><td>Input</td><td>Fixed example</td><td>Any schedule, lock-level or SQL-style, validated line by line; Banker's matrices</td></tr>
               <tr><td>Detection</td><td>Final graph with the cycle marked</td><td>DFS replayed step by step; every wait, grant, victim and restart explained</td></tr>
