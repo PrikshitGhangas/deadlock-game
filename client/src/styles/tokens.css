@@ -1,0 +1,90 @@
+/* Design tokens — light theme by default, dark via [data-theme="dark"] or OS preference. */
+:root {
+  --font: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'Cascadia Code', 'JetBrains Mono', Consolas, 'SF Mono', Menlo, monospace;
+
+  --bg: #F8F9FA;
+  --bg-elev: #FFFFFF;
+  --bg-sunken: #F1F3F5;
+  --fg: #111827;
+  --fg-muted: #6B7280;
+  --border: #E5E7EB;
+  --border-strong: #D1D5DB;
+
+  --accent: #2563eb;
+  --accent-fg: #ffffff;
+  --accent-soft: #dbe7ff;
+
+  --ok: #10B981;
+  --ok-soft: #D1FAE5;
+  --warn: #F59E0B;
+  --warn-soft: #FEF3C7;
+  --danger: #EF4444;
+  --danger-soft: #FEE2E2;
+  --info: #0891b2;
+  --info-soft: #cffafe;
+  --purple: #7c3aed;
+  --purple-soft: #ede9fe;
+
+  /* graph node states */
+  --node-active: #10B981;
+  --node-blocked: #F59E0B;
+  --node-aborted: #EF4444;
+  --node-committed: #059669;
+  --node-idle: #94a3b8;
+  --node-visiting: #7c3aed;
+  --node-done: #334155;
+  --edge: #64748b;
+  --edge-cycle: #EF4444;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --focus: 0 0 0 3px rgba(37, 99, 235, 0.35);
+  --transition: 160ms ease;
+}
+
+[data-theme='dark'] {
+  --bg: #0f141c;
+  --bg-elev: #161d28;
+  --bg-sunken: #0b1017;
+  --fg: #e6ebf2;
+  --fg-muted: #98a3b5;
+  --border: #283344;
+  --border-strong: #3a4759;
+
+  --accent: #60a5fa;
+  --accent-fg: #0b1220;
+  --accent-soft: #1e3a5f;
+
+  --ok: #4ade80;
+  --ok-soft: #14352a;
+  --warn: #fbbf24;
+  --warn-soft: #3d2f0c;
+  --danger: #f87171;
+  --danger-soft: #3f1a1a;
+  --info: #22d3ee;
+  --info-soft: #0f3540;
+  --purple: #a78bfa;
+  --purple-soft: #2c2350;
+
+  --node-active: #60a5fa;
+  --node-blocked: #fbbf24;
+  --node-aborted: #f87171;
+  --node-committed: #4ade80;
+  --node-idle: #64748b;
+  --node-visiting: #a78bfa;
+  --node-done: #cbd5e1;
+  --edge: #94a3b8;
+  --edge-cycle: #f87171;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --focus: 0 0 0 3px rgba(96, 165, 250, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --transition: 0ms; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}

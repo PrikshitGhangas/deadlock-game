@@ -1,0 +1,25 @@
+{
+  "name": "deadlock-game",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive DBMS Deadlock Game: visualize, simulate and learn deadlock detection, prevention and avoidance",
+  "type": "module",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n server,client -c blue,green \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "start": "npm run start -w server",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "docs:samples": "node scripts/gen-sample-io.mjs",
+    "docs:screenshots": "node scripts/screenshots.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "supertest": "^7.0.0",
+    "vitest": "^3.1.1"
+  }
+}
