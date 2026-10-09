@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Icon } from '../components/common/Icons.jsx';
 import ErDesignerVisualizer from '../components/lab/ErDesignerVisualizer.jsx';
 import NormalizationVisualizer from '../components/lab/NormalizationVisualizer.jsx';
@@ -31,8 +31,13 @@ const LAB_MODULES = [
   },
 ];
 
-export default function LabPage({ toast }) {
-  const [activeModule, setActiveModule] = useState('er_designer');
+export default function LabPage({ toast, initialModule = 'er_designer', onBackToMaster }) {
+  const [activeModule, setActiveModule] = useState(initialModule);
+
+  // Sync if initialModule changes from outside
+  useEffect(() => {
+    if (initialModule) setActiveModule(initialModule);
+  }, [initialModule]);
 
   return (
     <div className="lab-page" style={{ padding: '24px 32px', maxWidth: 1400, margin: '0 auto' }}>
@@ -50,12 +55,17 @@ export default function LabPage({ toast }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
           <div>
             <h1 style={{ margin: 0, fontSize: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Icon name="lab" size={20} color="var(--accent)" /> DBMS Laboratory
+              <Icon name="lab" size={20} color="var(--accent)" /> DBMS Laboratory Studio
             </h1>
             <p className="text-muted" style={{ margin: '2px 0 0 0', fontSize: 13 }}>
-              Interactive visual workbench for Database Design, Query Processing, and Transaction Concurrency Control.
+              Interactive workbench for Database Design, Query Processing, and Transaction Concurrency Control.
             </p>
           </div>
+          {onBackToMaster && (
+            <button className="btn btn-ghost" onClick={onBackToMaster} style={{ fontSize: 13 }}>
+              &larr; Master Hub
+            </button>
+          )}
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>

@@ -12,6 +12,7 @@ export default function BPlusTreeVisualizer({ toast }) {
   const [order, setOrder] = useState(3);
   const [keysList, setKeysList] = useState([10, 20, 5, 6, 12, 30, 7, 17]);
   const [newKey, setNewKey] = useState('');
+  const [batchText, setBatchText] = useState('');
   const [searchTarget, setSearchTarget] = useState(12);
   const [rangeLow, setRangeLow] = useState(6);
   const [rangeHigh, setRangeHigh] = useState(20);
@@ -48,6 +49,30 @@ export default function BPlusTreeVisualizer({ toast }) {
     toast?.(`Inserted key ${val} into B+ tree`);
   };
 
+  const handleBatchInsert = (e) => {
+    e.preventDefault();
+    const parsed = batchText
+      .split(/[\s,]+/)
+      .map(s => Number(s.trim()))
+      .filter(n => !isNaN(n));
+
+    if (parsed.length === 0) {
+      toast?.('Please provide valid numbers separated by commas.');
+      return;
+    }
+
+    // Append unique keys
+    const newKeys = Array.from(new Set([...keysList, ...parsed]));
+    setKeysList(newKeys);
+    setBatchText('');
+    toast?.(`Indexed ${parsed.length} keys into the tree.`);
+  };
+
+  const handleRemoveKey = (k) => {
+    setKeysList(prev => prev.filter(item => item !== k));
+    toast?.(`Removed key ${k}`);
+  };
+
   const handleReset = () => {
     setKeysList([]);
     toast?.('Cleared tree');
@@ -60,7 +85,7 @@ export default function BPlusTreeVisualizer({ toast }) {
           <h2>B+ Tree & Database Index Visualizer</h2>
           <p className="pane-lead">
             Explore physical storage indexing with dynamic order <em>M</em> B+ Trees.
-            Witness balanced splits, key copy-up into internal index routers, and fast leaf range scans.
+            Enter custom single keys or batch lists, witness balanced node splits, key copy-up, and fast leaf range scans.
           </p>
         </div>
         <div className="lab-actions">
@@ -96,33 +121,100 @@ export default function BPlusTreeVisualizer({ toast }) {
 
       {/* Controls row */}
       <div className="grid-2col" style={{ marginBottom: 16 }}>
-        {/* Insert and Search box */}
+        {/* Custom Input Box: Single & Batch */}
         <div className="card">
           <div className="card-header">
-            <h3>Insert & Search Operations</h3>
+            <h3>Custom Key Ingestion</h3>
             <span className="badge badge-neutral">{keysList.length} Keys Indexed</span>
           </div>
 
-          <form onSubmit={handleInsert} style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
+          {/* Single key insert form */}
+          <form onSubmit={handleInsert} style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
             <input
               type="number"
-              placeholder="Enter key to insert (e.g. 25)"
+              placeholder="Insert single key (e.g. 25)"
               value={newKey}
               onChange={(e) => setNewKey(e.target.value)}
-              style={{ flex: 1, padding: '8px 12px', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)' }}
+              style={{ flex: 1, padding: '7px 10px' }}
             />
             <button type="submit" className="btn btn-primary">
-              <Icon name="check" size={14} style={{ marginRight: 4 }} /> Insert Key
+              <Icon name="check" size={14} style={{ marginRight: 4 }} /> Insert
             </button>
           </form>
 
-          <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 14 }}>
+          {/* Batch key insert form */}
+          <form onSubmit={handleBatchInsert} style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
+            <input
+              type="text"
+              placeholder="Custom batch keys (e.g. 15, 8, 42, 60, 9)"
+              value={batchText}
+              onChange={(e) => setBatchText(e.target.value)}
+              style={{ flex: 1, padding: '7px 10px' }}
+            />
+            <button type="submit" className="btn btn-ghost">
+              Load Batch
+            </button>
+          </form>
+
+          {/* Current Keys Badges with removal */}
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--fg-muted)', marginBottom: 6 }}>
+              Currently Indexed Keys (Click ✕ to delete):
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, maxHeight: 90, overflowY: 'auto' }}>
+              {keysList.length === 0 ? (
+                <span className="text-muted" style={{ fontSize: 13 }}>No keys. Add single or batch keys above.</span>
+              ) : (
+                keysList.map((k) => (
+                  <span
+                    key={k}
+                    className="badge badge-neutral"
+                    style={{
+                      fontFamily: 'var(--mono)',
+                      fontSize: 12,
+                      padding: '3px 8px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                    }}
+                  >
+                    {k}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveKey(k)}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: 0,
+                        color: 'var(--danger)',
+                        fontSize: 11,
+                      }}
+                      title="Remove Key"
+                    >
+                      ✕
+                    </button>
+                  </span>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Search & Range Scan Box */}
+        <div className="card">
+          <div className="card-header">
+            <h3>Custom Search & Range Queries</h3>
+            <span className="badge badge-info">O(log N) Search</span>
+          </div>
+
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 12 }}>
             <label style={{ fontSize: 13, fontWeight: 600 }}>Search Key:</label>
             <input
               type="number"
               value={searchTarget}
               onChange={(e) => setSearchTarget(e.target.value)}
-              style={{ width: 80, padding: '4px 8px', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)' }}
+              style={{ width: 80, padding: '5px 8px' }}
             />
             {searchResult && (
               <span className={`badge ${searchResult.found ? 'badge-ok' : 'badge-danger'}`}>
@@ -132,55 +224,43 @@ export default function BPlusTreeVisualizer({ toast }) {
           </div>
 
           {searchResult && (
-            <div style={{ padding: 10, background: 'var(--bg-sunken)', borderRadius: 'var(--radius-sm)', fontSize: 13 }}>
-              <div style={{ fontWeight: 600, marginBottom: 4 }}>Search Traversal Trace (O(log N)):</div>
-              <ol style={{ margin: 0, paddingLeft: 20 }}>
+            <div style={{ padding: 8, background: 'var(--bg-sunken)', borderRadius: 'var(--radius-sm)', fontSize: 12, marginBottom: 12 }}>
+              <div style={{ fontWeight: 600, marginBottom: 4 }}>Search Traversal Trace:</div>
+              <ol style={{ margin: 0, paddingLeft: 18 }}>
                 {searchResult.trace.map((t, idx) => (
                   <li key={idx} style={{ marginBottom: 2 }}>{t.explanation}</li>
                 ))}
               </ol>
             </div>
           )}
-        </div>
 
-        {/* Range scan box */}
-        <div className="card">
-          <div className="card-header">
-            <h3>Leaf Node Range Query (Linked List Scan)</h3>
-            <span className="badge badge-info">O(log N + K)</span>
-          </div>
-
-          <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 14 }}>
-            <label style={{ fontSize: 13, fontWeight: 600 }}>Range:</label>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 8 }}>
+            <label style={{ fontSize: 13, fontWeight: 600 }}>Range Query:</label>
             <input
               type="number"
               value={rangeLow}
               onChange={(e) => setRangeLow(e.target.value)}
-              style={{ width: 70, padding: '4px 8px', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)' }}
+              style={{ width: 65, padding: '4px 6px' }}
             />
             <span>to</span>
             <input
               type="number"
               value={rangeHigh}
               onChange={(e) => setRangeHigh(e.target.value)}
-              style={{ width: 70, padding: '4px 8px', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)' }}
+              style={{ width: 65, padding: '4px 6px' }}
             />
+            {rangeResult && (
+              <span className="badge badge-ok">
+                {rangeResult.count} record(s)
+              </span>
+            )}
           </div>
 
           {rangeResult && (
-            <div style={{ padding: 10, background: 'var(--ok-soft)', borderRadius: 'var(--radius-sm)', fontSize: 13 }}>
-              <div style={{ fontWeight: 700, color: 'var(--ok)' }}>
-                Result Keys [{rangeResult.keys.join(', ')}] ({rangeResult.count} matching records)
-              </div>
-              <p className="text-muted" style={{ margin: '4px 0 0 0', fontSize: 12 }}>
-                Traversed down to the initial leaf, then followed horizontal sibling pointers across {rangeResult.leavesVisited.length} leaf node(s).
-              </p>
+            <div style={{ fontSize: 12, color: 'var(--fg-muted)' }}>
+              Result matching keys: <strong>[{rangeResult.keys.join(', ')}]</strong>
             </div>
           )}
-
-          <div style={{ marginTop: 12, fontSize: 12, color: 'var(--fg-muted)' }}>
-            <strong>Why B+ Trees?</strong> Unlike standard B-trees, all actual data records reside exclusively in leaf nodes. Internal nodes act purely as compact memory-friendly router keys, and leaves form a doubly linked list for efficient range queries.
-          </div>
         </div>
       </div>
 

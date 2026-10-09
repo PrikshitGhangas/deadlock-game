@@ -1,87 +1,89 @@
-/* Design tokens — light theme by default, dark via [data-theme="dark"] or OS preference. */
+/* Design tokens — Modern warm beige / off-white palette with subtle earthy accent. */
 :root {
   --font: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
   --mono: 'Cascadia Code', 'JetBrains Mono', Consolas, 'SF Mono', Menlo, monospace;
 
-  --bg: #F8F9FA;
-  --bg-elev: #FFFFFF;
-  --bg-sunken: #F1F3F5;
-  --fg: #111827;
-  --fg-muted: #6B7280;
-  --border: #E5E7EB;
-  --border-strong: #D1D5DB;
+  /* Modern Beige / Off-White light palette */
+  --bg: #F9F7F2;          /* warm off-white canvas */
+  --bg-elev: #FFFFFF;     /* pure crisp elevated card background */
+  --bg-sunken: #F1EDE4;   /* soft parchment sunken panel */
+  --fg: #1C1917;          /* warm deep charcoal graphite */
+  --fg-muted: #78716C;    /* warm stone gray */
+  --border: #E6E2D8;      /* subtle warm taupe border */
+  --border-strong: #D5CFC3; /* defined warm stone border */
 
-  --accent: #2563eb;
-  --accent-fg: #ffffff;
-  --accent-soft: #dbe7ff;
+  /* Subtle refined warm amber / terracotta accent */
+  --accent: #B45309;      /* warm refined amber-copper */
+  --accent-fg: #FFFFFF;
+  --accent-soft: #F6EDE1; /* delicate warm linen wash */
 
-  --ok: #10B981;
-  --ok-soft: #D1FAE5;
-  --warn: #F59E0B;
+  --ok: #15803D;          /* muted sage / forest green */
+  --ok-soft: #EDF7EE;
+  --warn: #B45309;        /* warm bronze */
   --warn-soft: #FEF3C7;
-  --danger: #EF4444;
-  --danger-soft: #FEE2E2;
-  --info: #0891b2;
-  --info-soft: #cffafe;
-  --purple: #7c3aed;
-  --purple-soft: #ede9fe;
+  --danger: #B91C1C;      /* deep terracotta rust red */
+  --danger-soft: #FDF0EE;
+  --info: #0F766E;        /* muted warm spruce teal */
+  --info-soft: #E6F4F1;
+  --purple: #6D28D9;
+  --purple-soft: #F3E8FF;
 
   /* graph node states */
-  --node-active: #10B981;
-  --node-blocked: #F59E0B;
-  --node-aborted: #EF4444;
-  --node-committed: #059669;
-  --node-idle: #94a3b8;
-  --node-visiting: #7c3aed;
-  --node-done: #334155;
-  --edge: #64748b;
-  --edge-cycle: #EF4444;
+  --node-active: #15803D;
+  --node-blocked: #B45309;
+  --node-aborted: #B91C1C;
+  --node-committed: #047857;
+  --node-idle: #78716C;
+  --node-visiting: #6D28D9;
+  --node-done: #44403C;
+  --edge: #78716C;
+  --edge-cycle: #B91C1C;
 
   --radius: 10px;
   --radius-sm: 6px;
-  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --focus: 0 0 0 3px rgba(37, 99, 235, 0.35);
+  --shadow: 0 1px 3px 0 rgba(28, 25, 23, 0.04), 0 1px 2px 0 rgba(28, 25, 23, 0.02);
+  --shadow-lg: 0 10px 15px -3px rgba(28, 25, 23, 0.06), 0 4px 6px -4px rgba(28, 25, 23, 0.03);
+  --focus: 0 0 0 3px rgba(180, 83, 9, 0.25);
   --transition: 160ms ease;
 }
 
 [data-theme='dark'] {
-  --bg: #0f141c;
-  --bg-elev: #161d28;
-  --bg-sunken: #0b1017;
-  --fg: #e6ebf2;
-  --fg-muted: #98a3b5;
-  --border: #283344;
-  --border-strong: #3a4759;
+  --bg: #171513;          /* warm deep obsidian/espresso */
+  --bg-elev: #211E1B;     /* warm elevated charcoal */
+  --bg-sunken: #12100E;   /* warm deep sunken background */
+  --fg: #F5F2EB;          /* warm linen off-white */
+  --fg-muted: #A8A29E;    /* warm muted stone */
+  --border: #35312C;
+  --border-strong: #49443D;
 
-  --accent: #60a5fa;
-  --accent-fg: #0b1220;
-  --accent-soft: #1e3a5f;
+  --accent: #D97706;      /* warm amber gold */
+  --accent-fg: #171513;
+  --accent-soft: #2D2316;
 
-  --ok: #4ade80;
-  --ok-soft: #14352a;
-  --warn: #fbbf24;
-  --warn-soft: #3d2f0c;
-  --danger: #f87171;
-  --danger-soft: #3f1a1a;
-  --info: #22d3ee;
-  --info-soft: #0f3540;
-  --purple: #a78bfa;
-  --purple-soft: #2c2350;
+  --ok: #34D399;
+  --ok-soft: #142E20;
+  --warn: #FBBF24;
+  --warn-soft: #382A10;
+  --danger: #F87171;
+  --danger-soft: #381A1A;
+  --info: #2DD4BF;
+  --info-soft: #122B27;
+  --purple: #A78BFA;
+  --purple-soft: #281D3E;
 
-  --node-active: #60a5fa;
-  --node-blocked: #fbbf24;
-  --node-aborted: #f87171;
-  --node-committed: #4ade80;
-  --node-idle: #64748b;
-  --node-visiting: #a78bfa;
-  --node-done: #cbd5e1;
-  --edge: #94a3b8;
-  --edge-cycle: #f87171;
+  --node-active: #34D399;
+  --node-blocked: #FBBF24;
+  --node-aborted: #F87171;
+  --node-committed: #10B981;
+  --node-idle: #78716C;
+  --node-visiting: #A78BFA;
+  --node-done: #E7E5E4;
+  --edge: #A8A29E;
+  --edge-cycle: #F87171;
 
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
-  --focus: 0 0 0 3px rgba(96, 165, 250, 0.45);
+  --focus: 0 0 0 3px rgba(217, 119, 6, 0.4);
 }
 
 @media (prefers-reduced-motion: reduce) {

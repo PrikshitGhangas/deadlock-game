@@ -44,15 +44,37 @@ function renderTreeNode(node) {
 export default function QueryOptimizerVisualizer({ toast }) {
   const [selectedSample, setSelectedSample] = useState(SAMPLE_QUERIES[0].id);
   const [sqlText, setSqlText] = useState(SAMPLE_QUERIES[0].sql);
+  const [customStats, setCustomStats] = useState({
+    Student: 10000,
+    Enrollment: 50000,
+    Course: 500,
+    Department: 50,
+    Employee: 5000,
+  });
+
+  const formattedStats = useMemo(() => {
+    const res = {};
+    for (const [k, v] of Object.entries(customStats)) {
+      res[k] = { rows: Number(v) || 1000 };
+    }
+    return res;
+  }, [customStats]);
 
   const opt = useMemo(() => {
-    return optimizeQuery(sqlText);
-  }, [sqlText]);
+    return optimizeQuery(sqlText, formattedStats);
+  }, [sqlText, formattedStats]);
 
   const handlePickSample = (sample) => {
     setSelectedSample(sample.id);
     setSqlText(sample.sql);
     toast?.(`Loaded sample query: ${sample.title}`);
+  };
+
+  const handleUpdateStat = (table, rows) => {
+    setCustomStats(prev => ({
+      ...prev,
+      [table]: Number(rows),
+    }));
   };
 
   return (
@@ -62,7 +84,8 @@ export default function QueryOptimizerVisualizer({ toast }) {
           <h2>Relational Algebra & Query Tree Optimizer</h2>
           <p className="pane-lead">
             Visualizes the compilation of SQL into Canonical Relational Algebra Query Trees and
-            demonstrates heuristic query rewriting (such as selection pushdown and join conversion) to drastically cut intermediate tuple generation.
+            demonstrates heuristic query rewriting (selection pushdown, join conversion, projection pruning).
+            Tweak the custom SQL and table row sizes below to test intermediate tuple reductions.
           </p>
         </div>
         <div className="lab-actions">
@@ -86,19 +109,49 @@ export default function QueryOptimizerVisualizer({ toast }) {
         ))}
       </div>
 
-      {/* SQL Editor */}
-      <div className="card" style={{ marginBottom: 16 }}>
-        <label className="label" htmlFor="sql-query-input">
-          SQL Query Definition:
-        </label>
-        <textarea
-          id="sql-query-input"
-          className="input-textarea"
-          rows={4}
-          value={sqlText}
-          onChange={(e) => setSqlText(e.target.value)}
-          spellCheck="false"
-        />
+      <div className="grid-2col" style={{ marginBottom: 16 }}>
+        {/* Custom SQL Editor */}
+        <div className="card">
+          <div className="card-header">
+            <h3>Custom SQL Query Definition</h3>
+            <span className="badge badge-neutral">Arbitrary Input</span>
+          </div>
+          <textarea
+            id="sql-query-input"
+            className="input-textarea"
+            rows={5}
+            value={sqlText}
+            onChange={(e) => setSqlText(e.target.value)}
+            spellCheck="false"
+            placeholder="SELECT S.name FROM Student S JOIN Enrollment E ON S.id = E.student_id WHERE E.grade > 8;"
+          />
+        </div>
+
+        {/* Custom Table Row Estimator */}
+        <div className="card">
+          <div className="card-header">
+            <h3>Custom Table Row Cardinality</h3>
+            <span className="badge badge-info">Cost Estimator</span>
+          </div>
+          <p className="text-muted" style={{ margin: '0 0 10px 0', fontSize: 12 }}>
+            Adjust table row counts to see how Cartesian product scale compares against pushdown selections:
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 10 }}>
+            {Object.entries(customStats).map(([tbl, rows]) => (
+              <label key={tbl} style={{ fontSize: 12, display: 'flex', flexDirection: 'column', gap: 3 }}>
+                <span style={{ fontWeight: 600 }}>{tbl}:</span>
+                <input
+                  type="number"
+                  min="10"
+                  step="500"
+                  value={rows}
+                  onChange={(e) => handleUpdateStat(tbl, e.target.value)}
+                  style={{ padding: '4px 6px', fontSize: 12 }}
+                />
+              </label>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Heuristic Transformation Rules Summary */}
